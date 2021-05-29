@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CleanArch.Application.Interfaces
 {
     public interface ICourseService
     {
-        CourseViewModel GetCourses();
+        Task<CourseViewModel> GetCourse(int Id);
         void Create(CourseViewModel courseViewModel);
     }
 }

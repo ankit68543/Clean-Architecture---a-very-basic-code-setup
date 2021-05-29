@@ -3,20 +3,22 @@ using CleanArch.Application.ViewModels;
 using CleanArch.Domain.Commands;
 using CleanArch.Domain.Core.Bus;
 using CleanArch.Domain.Interfaces;
+using CleanArch.Domain.Models;
+using CleanArch.Domain.Queries;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CleanArch.Application.Services
 {
     public class CourseService : ICourseService
     {
-        private readonly ICourseRepository _courseRepository;
+        
         private readonly IMediatorHandler _bus;
 
-        public CourseService(ICourseRepository courseRepository, IMediatorHandler bus)
-        {
-            _courseRepository = courseRepository;
+        public CourseService(IMediatorHandler bus)
+        {   
             _bus = bus;
         }
 
@@ -28,14 +30,23 @@ namespace CleanArch.Application.Services
                   courseViewModel.ImageUrl
                 );
 
-            _bus.SendCommand(createCourseCommand);
+            _bus.SendCommand<CreateCourseCommand, bool>(createCourseCommand);
+
         }
 
-        public CourseViewModel GetCourses()
+        public async Task<CourseViewModel> GetCourse(int Id)
         {
-            return new CourseViewModel()
+            var query = new CreateCourseQuery(
+               Id
+              );
+
+             var response= await _bus.SendCommand<CreateCourseQuery, Course>(query);
+
+            return new CourseViewModel
             {
-                Courses = _courseRepository.GetCourses()
+                Name= response.Name,
+                Description= response.Description,
+                ImageUrl=response.ImageUrl
             };
         }
     }

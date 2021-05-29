@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CleanArch.Domain.Interfaces
 {
     public interface ICourseRepository
     {
-        IEnumerable<Course> GetCourses();
+        Course GetCourse(int Id);
         void Add(Course course);
     }
 }

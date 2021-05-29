@@ -26,5 +26,13 @@ namespace CleanArch.Api.Controllers
 
             return Ok(courseViewModel);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Get(int Id)
+        {
+           var courseViewModel = await _courseService.GetCourse(Id);
+
+            return Ok(courseViewModel);
+        }
     }
 }

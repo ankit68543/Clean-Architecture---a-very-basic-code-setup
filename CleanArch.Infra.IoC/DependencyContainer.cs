@@ -4,6 +4,9 @@ using CleanArch.Domain.CommandHandlers;
 using CleanArch.Domain.Commands;
 using CleanArch.Domain.Core.Bus;
 using CleanArch.Domain.Interfaces;
+using CleanArch.Domain.Models;
+using CleanArch.Domain.Queries;
+using CleanArch.Domain.QueriesHandlers;
 using CleanArch.Infra.Bus;
 using CleanArch.Infra.Data.Context;
 using CleanArch.Infra.Data.Repository;
@@ -24,6 +27,8 @@ namespace CleanArch.Infra.IoC
 
             //Domain Handlers
             services.AddScoped<IRequestHandler<CreateCourseCommand, bool>, CourseCommandHandler>();
+
+            services.AddScoped<IRequestHandler<CreateCourseQuery, Course>, CourseQueryHandler>();
 
             //Application Layer 
             services.AddScoped<ICourseService, CourseService>();
